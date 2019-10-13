@@ -1,0 +1,36 @@
+<p>
+    <a class="btn btn-primary" routerLink="/admin/products/new">New Product</a>
+</p>
+<p>
+    <input #query (keyup)="filter(query.value)" placeholder="Search..." type="text" class="form-control">
+</p>
+<table class="table table-striped" [svData]="filteredProducts" #sv="svDataTable" [svRowsOnPage]="5"
+    svSortBy="title.price" svSortOrder="asc">
+    <thead>
+        <tr>
+            <th>
+                <sv-default-sorter by="title">Title</sv-default-sorter>
+            </th>
+            <th>
+                <sv-default-sorter by="price">Price</sv-default-sorter>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of sv.data">
+            <td>{{item.title}}</td>
+            <td>{{item.price}}</td>
+            <td>
+                <a [routerLink]="['/admin/products/',item.key]">Edit</a>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
+            </td>
+        </tr>
+    </tfoot>
+</table>
